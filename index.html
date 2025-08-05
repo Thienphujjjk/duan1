@@ -17,11 +17,10 @@
 <div class="container" id="frames"></div>
 
 <script>
-const SHEET_ID = "1IJbcPeAoTf_9GUareM5dYI7Te4C6c2X-vcT5dtVE_sI"; // Thay bằng ID sheet
-const RANGE = "A1:C3"; // Thay bằng vùng dữ liệu chứa ảnh (cột A-C)
+const SHEET_ID = "1IJbcPeAoTf_9GUareM5dYI7Te4C6c2X-vcT5dtVE_sI"; 
+const SHEET_NAME = "Sheet1"; // tên tab trong sheet
 
-// URL xuất Sheet thành JSON qua API public (API v4 JSON feed cũ)
-const SHEET_URL = `https://opensheet.elk.sh/${SHEET_ID}/${encodeURIComponent(RANGE)}`;
+const SHEET_URL = `https://opensheet.elk.sh/${SHEET_ID}/${SHEET_NAME}`;
 
 async function loadImages() {
   try {
@@ -31,8 +30,7 @@ async function loadImages() {
     container.innerHTML = "";
 
     data.forEach((row, index) => {
-      // Giả sử cột C chứa URL ảnh
-      const url = row.C || "https://via.placeholder.com/200x150?text=No+Image";
+      const url = row["C"] || row["Ảnh"] || "https://via.placeholder.com/200x150?text=No+Image";
       const frame = document.createElement("div");
       frame.className = "frame";
       frame.innerHTML = `
@@ -46,9 +44,9 @@ async function loadImages() {
   }
 }
 
-// Gọi khi load và refresh mỗi 30 giây
 loadImages();
 setInterval(loadImages, 30000);
 </script>
 </body>
 </html>
+
